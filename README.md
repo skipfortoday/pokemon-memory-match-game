@@ -1,4 +1,8 @@
-# https://user-images.githubusercontent.com/43211197/202888146-627c3cd5-9a0d-4c94-98f9-3c41d91ede71.mp4
+
+
+https://user-images.githubusercontent.com/43211197/202888175-c50c5b63-2668-42aa-ba89-45a478ce6c8b.mp4
+
+
 # Pokemon Memeory Match Game
 <table>
 <tr>
@@ -57,8 +61,8 @@ If you'd like to request a new function, feel free to do so by opening an issue.
 
 ## Team
 
+
 [![Harsh Vijay](https://github.com/rizqipratamar.png)](https://github.com/rizqipratamar)  | 
 ---|---
-
-
+[Rizqi Pratama ](https://github.com/rizqipratamar) |
 
