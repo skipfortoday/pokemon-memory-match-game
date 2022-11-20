@@ -59,7 +59,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 ">
+    <div className="min-h-screen bg-base-200">
       <div className="hero pt-2">
         <div className="hero-content text-center">
           <div className="max-w-md">
@@ -84,11 +84,11 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className=" p-4">
-        <div className="grid grid-cols-4 gap-2 md:gap-4 ">
+      <div className="p-4 flex justify-center">
+        <div className="grid grid-cols-4 gap-3 max-w-md justify-center">
           {pokeData?.pokemonList?.map((pokemon, index) => (
             <div
-              className="min-w-[100px] min-h-[100px] card rounder-lg bg-transparent cursor-pointer group perspective flex justify-center"
+              className="min-w-[88px] min-h-[88px] card rounder-lg bg-transparent cursor-pointer group perspective flex justify-center align-middle"
               key={index}
               onClick={() => {
                 if (!pokemon.isMatched) toggleOpen(index);
@@ -99,9 +99,9 @@ export default function Home() {
                   pokemon.isOpen && "group-hover:my-rotate-y-180"
                 } w-full h-full duration-1000`}
               >
-                <div className="absolute backface-hidden border-2 w-full h-full md:h-56">
-                  <div className="card bg-base-100 p-2 md:p-4 shadow-xl transition duration-500 ease-in-out transform hover:translate-x-3 hover:shadow-lg  cursor-pointer">
-                    <figure className="h-20">
+                <div className="absolute backface-hidden border-2 w-full h-full">
+                  <div className="card bg-base-100  p-2 md:p-4 shadow-xl transition duration-500 ease-in-out transform hover:translate-x-3 hover:shadow-lg  cursor-pointer">
+                    <figure className="w-full h-full">
                       <Image
                         src={
                           "https://www.pngitem.com/pimgs/m/604-6046515_pokeball-pixel-art-png-transparent-png.png"
@@ -119,7 +119,7 @@ export default function Home() {
                   } w-full h-full bg-gray-100 overflow-hidden`}
                 >
                   <div className="card bg-base-100 p-2 md:p-4 shadow-xl transition duration-500 ease-in-out transform hover:-translate-x-3 hover:shadow-lg  cursor-pointer">
-                    <figure className="h-20">
+                    <figure className="w-full h-full">
                       <Image
                         src={pokemon?.image}
                         alt={pokemon.name}
