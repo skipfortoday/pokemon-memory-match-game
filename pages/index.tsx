@@ -1,12 +1,23 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import useGetMediumArticles, {
   PokeObject,
 } from "services/customHooks/useStatePokemon";
+import { authProvider } from "web3/authprovider";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export default function Home() {
   const [pokeData, setPokeData] = useGetMediumArticles();
+  const [identity, setIdentity] = useState({ address: "", balance: "" });
+
+  useEffect(() => {
+    getIndentity();
+    return () => {
+      setIdentity({ address: "", balance: "" });
+    };
+  }, []);
 
   const checkIsMatched = async (
     tempArray: Array<PokeObject>,
@@ -48,43 +59,98 @@ export default function Home() {
       });
     }
     if (pokeData.firstPick !== null && !pokeData.isPaused) {
+      setPokeData({
+        ...pokeData,
+        isPaused: true,
+      });
       await checkIsMatched(tempArray, arrayId);
     }
   };
 
-  const formatedTaskReman = (matches: number) => {
-    const param = 8;
-    if (matches === param) return "congrats!";
-    return `${param - matches} task remain`;
+  const handleLogin = async () => {
+    try {
+      await authProvider.login();
+      toast("🦄 Connected Metamask!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      getIndentity();
+    } catch (error) {
+      toast("🦄 Please run on Metamask!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleLogout = async () => {
+    await authProvider.logout();
+    setIdentity({ address: "", balance: "" });
+  };
+
+  const getIndentity = async () => {
+    const id = await authProvider.getUserIdentity();
+    setIdentity(id);
   };
 
   return (
     <div className="min-h-screen bg-base-200">
-      <div className="hero pt-2">
+      <ToastContainer />
+      <div className="hero pt-1">
         <div className="hero-content text-center">
           <div className="max-w-md">
-            <h1 className="text-3xl font-bold">Memory Match Game</h1>
-            <div className="stats shadow mt-6 ">
+            <button
+              className={`btn glass text-orange-500 ${
+                identity?.address && "text-xs"
+              } `}
+              onClick={() =>
+                identity?.address ? handleLogout() : handleLogin()
+              }
+            >
+              {identity?.address || "🦊 Connect with metamask"}
+            </button>
+            <div className="stats shadow mt-4 ">
               <div className="stat">
-                <div className="stat-value">{pokeData.matches}</div>
-                <div className="stat-title">Tasks done</div>
-                <div className="stat-desc text-secondary">
-                  {formatedTaskReman(pokeData.matches)}
+                <div className="stat-title">Bonus Point</div>
+                <div className="stat-value">0.02</div>
+                <div className="stat-actions">
+                  <label
+                    htmlFor="my-modal-6"
+                    className="btn btn-sm btn-success"
+                  >
+                    Claim
+                  </label>
                 </div>
               </div>
-              <div className="flex mx-auto my-auto px-4">
-                <button
-                  className="btn btn-error"
-                  onClick={() => location.reload()}
-                >
-                  Restart
-                </button>
+              <div className="stat">
+                <div className="stat-title">Tasks done</div>
+                <div className="stat-value">{pokeData.matches}</div>
+                <div className="stat-actions">
+                  <button
+                    className="btn btn-xs btn-error"
+                    onClick={() => location.reload()}
+                  >
+                    Restart
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="p-4 flex justify-center">
+      <div className=" flex justify-center">
         <div className="grid grid-cols-4 gap-3 max-w-md justify-center">
           {pokeData?.pokemonList?.map((pokemon, index) => (
             <div
@@ -132,6 +198,18 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <div className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Cooming Soon!</h3>
+          <p className="py-4">Reward coin will develop as soon as possible!</p>
+          <div className="modal-action">
+            <label htmlFor="my-modal-6" className="btn">
+              Yay!
+            </label>
+          </div>
         </div>
       </div>
     </div>

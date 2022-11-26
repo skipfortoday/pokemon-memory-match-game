@@ -12,7 +12,11 @@
     "daisyui": "^2.33.0",
     "next": "13.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-leaflet": "^4.1.0",
+    "react-toastify": "^9.1.1",
+    "web3": "1.7.4",
+    "web3modal": "^1.9.10"
   },
   "devDependencies": {
     "@types/node": "18.11.7",
