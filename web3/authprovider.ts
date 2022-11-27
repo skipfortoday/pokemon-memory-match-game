@@ -3,7 +3,7 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 import { getBalance } from "./utils";
 
-export const TOKEN_KEY = "refine-auth";
+export const TOKEN_KEY = "TOKEN_KEY";
 
 const providerOptions = {};
 
